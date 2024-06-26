@@ -1,0 +1,256 @@
+/* Add some basic styling to the body */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+  font-family: 'Poppins', sans-serif;
+  color: white;
+  margin: 0%;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #232323 !important; /* Color de fondo para el cuerpo */
+  overflow-x: hidden;
+}
+
+.navbar{
+  padding: 15px 18px !important;
+  margin-bottom: 100px;
+}
+
+.logo{
+  font-weight: 600;
+  color: rgba(255,255,255, 0.848) !important;
+}
+
+.nav-item .nav-link{
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 14px;
+  font-weight: 500;
+  position: relative;
+}
+
+.navbar .nav-link{
+  color: rgba(255,255,255,0.92);
+  font-size: 14px;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+}
+
+.nav-link::after{
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0px;
+  background-color: #ff8139 !important;
+  width: 0%;
+  height: 3px;
+  transition: 0.4s ease-in-out;
+}
+
+
+.nav-item{
+  margin: 0px 10px;
+}
+
+.nav-item:hover .nav-link::after{
+  width: 100%;
+}
+
+.nav-link:hover{
+  color: #ff8139 !important;
+}
+
+.custom-toggler {
+  border-color: orange !important;
+}
+
+.container{
+  margin-top: 150px;
+}
+
+.content-home{
+  margin-top: 50px;
+  height: 15vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.home-heading{
+  font-size: 50px;
+  font-weight: 700;
+  line-height: 74px;
+}
+
+.home-span{
+  color: rgb(255, 129, 57);
+}
+
+.card-body{
+  background-color: #424242;
+  border: 15px;
+}
+
+/* Style the buttons */
+.btn {
+  border: none;
+  outline: none;
+  height: 35px;
+  border-radius: 5px;
+  transition: .4s;
+}
+
+.btn{
+  background-color: black !important;
+}
+
+
+.card-body h5{
+  color: #90A4AE;
+}
+.btn-primary:hover {
+  background-color: rgba(37, 95, 156, 0.9);
+  border-color: rgba(37, 95, 156, 0.9);
+  color: #90A4AE !important;
+}
+
+
+.btn-secondary:hover {
+  background-color: rgba(93, 80, 118, 0.9);
+  color: #B5B0B3;
+}
+
+.container img{
+  height: 80px;
+  width: 100px;
+}
+
+h4{
+  color: #90A4AE;
+}
+
+#h4{
+  color: #90A4AE;
+}
+
+/* Agregar estilos para centrar el formulario */
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 200vh; /* Ajusta la altura según sea necesario */
+
+}
+
+
+
+/* Estilos para el formulario */
+.form-container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 200vh;
+}
+
+/* Estilos para los elementos del formulario */
+.form-container form label,
+.form-container form input,
+.form-container form .input-group {
+  margin-bottom: 10px; /* Espacio entre cada elemento */
+}
+
+/* Estilos adicionales para el formulario */
+form {
+  width: 800px;
+  height: 200vh; /* Ancho del formulario */
+}
+
+input{
+  height: 30px;
+  width: 50%;
+  background: #505050;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  outline: none;
+  margin-bottom: 20px;
+  color: white;
+  -webkit-appearance: none;
+}
+
+.list-group-item {
+  background-color: #292929 !important;
+  border-bottom: 2px solid rgb(255, 129, 57);
+  color: rgb(255, 129, 57) !important;
+  min-width: 150px;
+}
+
+.list-group-item input{
+  width: 30%;
+}
+
+
+#exercise{
+  background: #505050;
+  border: none;
+}
+
+#added-exercises {
+  width: 800px;
+  min-width: 150px;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.exercise-detail{
+  margin: 60px;
+}
+
+.form-control{
+  color: #90A4AE !important; 
+  background-color: black !important;
+}
+.form-control-sm{
+  color: #90A4AE !important; 
+  background-color: #292929 !important; 
+}
+
+h5 .orange{
+  color: #90A4AE !important;
+}
+
+#modal-body-content{
+  color: black;
+}
+
+.pagination > li > a
+{
+    background-color: white;
+    color: rgba(150, 53, 0, 0.8);
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover
+{
+    color: #5a5a5a;
+    background-color: #eee;
+    border-color: #ddd;
+}
+
+.pagination > .active > a
+{
+    color: white;
+    background-color: rgba(225, 80, 0, 0.8) !Important;
+    border: none !important;
+}
+
+.pagination > .active > a:hover
+{
+    background-color: #5A4181 !Important;
+}

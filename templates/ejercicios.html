@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container-fluid mt-5">
+    <div class="row mt-5">
+        <div class="col-md-8 offset-md-2">
+            <h4 id="h4">Biblioteca de <span>ejercicios </span></h4><br><br>
+
+            <div class="list-group">
+              {% for ejercicio in ejercicios %}
+              <div class="card m-4 h-100">
+                <div class="card-header">
+                    {{ ejercicio.primaryMuscles | join(', ') }}
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">{{ejercicio.name}}</h5>
+                  <p class="card-text">{{ejercicio.instructions | join(', ')}}</p>
+                  <p class="card-text">{{ejercicio.muscles}}</p>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item {% if page <= 1 %}disabled{% endif %}">
+                        <a class="page-link" href="/bibliotecaejercicios?page={{ page - 1 }}" tabindex="-1">Previous</a>
+                    </li>
+                    {% for p in range(1, total_pages + 1) %}
+                    <li class="page-item {% if page == p %}active{% endif %}">
+                        <a class="page-link" href="/bibliotecaejercicios?page={{ p }}">{{ p }}</a>
+                    </li>
+                    {% endfor %}
+                    <li class="page-item {% if page >= total_pages %}disabled{% endif %}">
+                        <a class="page-link" href="/bibliotecaejercicios?page={{ page + 1 }}">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+  </div>
+
+{% endblock %}

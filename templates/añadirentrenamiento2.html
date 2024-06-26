@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+    <div class="content-home">
+        <h2>Añadir <span class="home-span">Workout</span></h2>
+    </div>
+</div>
+
+<div class="form-container">
+    <form id="add-session-form" method="POST" action="/savesession" onsubmit="submitSession(event)">
+        <label for="workout-select">Selecciona un entrenamiento:</label>
+        <select id="workout-select" name="workout-select" class="form-control" onchange="fetchExercises()" required>
+            <option value="" disabled selected>Selecciona un entrenamiento</option>
+            {% for workout in workouts %}
+            <option value="{{ workout._id }}">{{ workout.name }}</option>
+            {% endfor %}
+             <input type="hidden" id="nombre-seleccionado" name="nombre-seleccionado">
+        </select>
+
+        <div id="exercise-details" style="display:none;">
+            <h3 id="nombre-seleccionado"></h3>
+            <br>
+            <br>
+            <h4>Fecha del entrenamiento:</h4>
+            <input type="text" name="fecha" class="form-control-sm rounded">
+            <br>
+            <br>
+            <br>
+            <h4>Ejercicios del entrenamiento:</h4>
+            <div id="exercises-container" class="mb-4">
+            <br>
+            <br>
+             <!--Iteramos los entrenamientos y los ejercicios de cada uno-->
+                {% for workout in workouts %}
+                    {% for exercise_name in workout.exercises %}
+                    <div class="exercise-detail">
+                    </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+            <button type="submit" class="btn btn-primary" onclick="submitSession(event)">Añadir Entrenamiento</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    function fetchExercises() {
+        var workoutId = document.getElementById("workout-select").value;
+        // Solicitud a la url con la variable del workout para acceder
+        fetch(`/api/workout/${workoutId}`)
+            .then(response => response.json()) // El cuerpo de la respuesta se parsea en json
+            .then(data => {
+                if (data.detail) {
+                    alert(data.detail); // Se asegura de si hay mensaje de error
+                    return;
+                }
+                var exercisesContainer = document.getElementById("exercises-container");
+                exercisesContainer.innerHTML = ""; //Eliminar los ejercicios del workout anterior seleccionado
+                if (data.exercises && data.exercises.length > 0) {
+                    var exercises = JSON.parse(data.exercises[0]); // Convertir la cadena de ejercicios en lista
+                    exercises.forEach((exercise, index) => {
+                        var exerciseDiv = document.createElement("div");
+                        exerciseDiv.className = "exercise-detail";
+                        exerciseDiv.innerHTML = `
+                        <span class="home-span">${exercise}</span>
+                        <input type="hidden" name="exercise-name-${index + 1}" value="${exercise}">
+                            <br>
+                            <br>
+                            <label for="sets-${index + 1}">Número de sets:</label>
+                            <input type="text" class="form-control-sm rounded" id="sets-${index + 1}" name="sets-${index + 1}" required>
+                            <label for="kgs-${index + 1}">Kgs por set (separados por comas, decimales con punto):</label>
+                            <input type="text" class="form-control-sm rounded" id="kgs-${index + 1}" name="kgs-${index + 1}" placeholder="10, 12.5, 15" required>
+                        `;
+                        exercisesContainer.appendChild(exerciseDiv);
+                    });
+                    document.getElementById("exercise-details").style.display = "block";
+                    document.getElementById("nombre-seleccionado").innerText = data.nombre;
+                } else {
+                    console.error('No se han encontrado ejercicios en la respuesta');
+                }
+            })
+            .catch(error => console.error('Error al hacer fetch:', error));
+    }
+
+    
+</script>
+{% endblock %}

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CeGym</title>
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', path='/style.css')}}">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/bootstrap.min.css')}}" rel="stylesheet">
+    <!-- Add your custom CSS -->
+    <style>
+        /* Set the border color */
+         
+        .custom-toggler.navbar-toggler {
+            border-color: rgb(165, 92, 44);
+        }
+        /* Setting the stroke to green using rgb values (0, 128, 0) */
+         
+        .custom-toggler .navbar-toggler-icon {
+            background-image: url(
+"data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgb(165, 92, 44)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+        }
+    </style>
+
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container mt-2">
+            <a class="navbar-brand logo" href="#">CeGym</a>
+            <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                    <a class="nav-link" href="/index">Inicio</span></a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link" href="/bibliotecaejercicios">Biblioteca de Ejercicios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/cerrarsesion">Cerrar Sesión</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                          <a class="dropdown-item" href="#">Action</a>
+                          <a class="dropdown-item" href="#">Another action</a>
+                          <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        {%block content%} {%endblock %}
+    </div>
+</body>
+</html>    

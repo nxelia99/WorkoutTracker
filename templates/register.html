@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/login_register.css">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <title>Regístrate</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="container main">
+            <div class="row">
+                <div class="col-md-6 side-image">
+                    <!--Imagen-->
+                    <img src="../static/imagenes/logo.png" alt="">
+                    <div class="text">
+                        <p>Accede a CeGym</p>
+                    </div>
+                </div>
+                <div class="col-md-6 right">
+                    <div class="input-box">
+                        <header>Regístrate</header>
+                            <form action="/register" method="post" enctype="multipart/form-data">
+                                <div class="input-box">
+                                    <div class="input-field">
+                                        <input type="text" class="input" id="username" name="username" required autocomplete="off">
+                                        <label for="username">Usuario</label>
+                                    </div>
+                                    <div class="input-field">
+                                        <input type="password" class="input" id="password" name="password" required autocomplete="off">
+                                        <label for="password">Contraseña</label>
+                                    </div>
+                                    <div class="input-field">
+                                        <input type="email" class="input" id="email" name="email" required autocomplete="off">
+                                        <label for="email">Email</label>
+                                    </div>
+                                    <div class="input-field">
+                                        <input type="submit" class="submit" value="Regístrate">
+                                    </div>
+                                    <div class="register">
+                                        <span>¿Ya tienes cuenta? <a href="/login">Inicia Sesión</a></span>
+                                    </div>
+                                </div>
+                            </form>
+                    </div>
+                </div>
+            </div>    
+        </div>
+        <p class="pie_foto">Photo by Victor Freitas: https://www.pexels.com/photo/black-barbell-685530/</p>
+    </div>
+</body>
+</html>

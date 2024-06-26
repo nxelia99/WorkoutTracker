@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<style>
+    #exercise-list {
+        max-height: 400px; /* Ajusta la altura según sea necesario */
+        overflow-y: auto; /* Agrega una barra de desplazamiento vertical */
+        min-width: 150px;
+    }
+</style>
+<div class="container">
+    <div class="content-home">
+        <h2> Crea un nuevo <span class="home-span"> entrenamiento </span></h2>
+    </div>
+</div>
+<div class="form-container">
+    <form method="POST" action="crearworkout" onsubmit="updateHiddenInput()">
+        <h4>Rellena el formulario:</h4>
+        <br>
+        <label for="name">Nombre del entrenamiento:</label>
+        <input type="text" name="nombre" id="nombre" required class="rounded">
+        <label for="name">Músculos entrenados:</label>
+        <input type="text" name="musculos" id="musculos" class="rounded" required>
+        <label for="exercise">Ejercicios:</label>
+        <div class="input-group" style="width: 50%;">
+            <br>
+            <input type="search" class="form-control rounded" id="exercise" onkeyup="searchExercise()" placeholder="Search for exercises..." aria-label="Search" aria-describedby="search-addon" />
+            <br>
+            <div class="list-group mt-5 d-flex align-items-center text-center" id="exercise-list">
+                {% for exercise in all_exercises %}
+                <button type="button" class="list-group-item list-group-item-action" onclick="addExercise('{{ exercise.name }}')">{{ exercise.name }}</button>
+                {% endfor %}
+            </div>
+            <br>
+        </div>
+        <h4>Ejercicios añadidos:</h4>
+        <ul id="added-exercises" class="d-flex flex-column align-items-center"></ul>
+        <input type="hidden" id="exercise-names" name="exercise_names">
+        <button type="submit" class="btn btn-primary">Crear Entrenamiento</button>
+        </form>
+</div>
+<script>
+    function addExercise(exerciseName) {
+        // busca todos los espacios en blanco en la cadena y los reemplaza con un guion
+        var exerciseId = "exercise-" + exerciseName.replace(/\s+/g, '-').toLowerCase();
+        var addedExercises = document.getElementById("added-exercises");
+        var exerciseItem = document.createElement("li");
+        exerciseItem.style.marginBottom = "10px";
+        exerciseItem.style.height = "50px";
+        exerciseItem.style.minWidth = "500px"
+        exerciseItem.className = "list-group-item d-flex flex-column align-items-center text-center";
+
+        // Contenedor para el nombre del ejercicio y el icono de eliminación
+        var exerciseContent = document.createElement("div");
+        exerciseContent.className = "d-flex w-100 justify-content-between align-items-center w-100";
+        exerciseContent.textContent = exerciseName;
+        exerciseItem.id = exerciseId;
+
+        var deleteExerciseIcon = document.createElement("i");
+        deleteExerciseIcon.className = "fas fa-trash-alt";
+        deleteExerciseIcon.addEventListener('click', function() {
+            exerciseItem.remove();
+            updateHiddenInput(); // Actualizar el campo oculto después de eliminar un ejercicio
+        });
+
+        exerciseContent.appendChild(deleteExerciseIcon);
+        exerciseItem.appendChild(exerciseContent);
+
+    
+        addedExercises.appendChild(exerciseItem);
+
+        // Actualizar el campo oculto con los nombres de los ejercicios seleccionados
+        updateHiddenInput();
+    }
+
+    function obtenerNombresEjercicios() {
+    var ejercicios = [];
+    var elementosLista = document.querySelectorAll("#added-exercises li");
+    elementosLista.forEach(function(elemento) {
+        var nombreEjercicio = elemento.querySelector("div").textContent;
+        ejercicios.push({ nombre: nombreEjercicio});
+    });
+    return ejercicios;
+}
+
+function updateHiddenInput() {
+    var ejercicios = obtenerNombresEjercicios().map(function(ejercicio) {
+        return ejercicio.nombre;
+    });
+    var hiddenInput = document.getElementById("exercise-names");
+    if (hiddenInput) {
+        hiddenInput.value = JSON.stringify(ejercicios);
+        console.log("Ejercicios seleccionados:", ejercicios);
+    }
+}
+
+function submitForm(event) {
+    updateHiddenInput();
+}
+
+function searchExercise() {
+    var input, filter, list, items, i, txtValue;
+    input = document.getElementById("exercise");
+    filter = input.value.toUpperCase();
+    list = document.getElementById("exercise-list");
+    items = list.getElementsByTagName("button");
+
+    for (i = 0; i < items.length; i++) {
+        txtValue = items[i].textContent || items[i].innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            items[i].style.display = "";
+            items[i].style.minWidth = "400px"
+        } else {
+            items[i].style.display = "none";
+        }
+    }
+}
+</script>
+
+
+{% endblock %}

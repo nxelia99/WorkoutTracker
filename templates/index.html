@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="content-home">
+            <h1 class="home-heading mb-5"> PUSH YOURSELF TO THE LIMIT, <span class="home-span"> BE BETTER </span></h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+          <div class="card mb-3" style="min-height: 190px;">
+            <div class="card-body">
+              <h5 class="card-title">Crea un nuevo entrenamiento</h5>
+              <p class="card-text">¿Necesitas una rutina completamente nueva?</p>
+              <a href="crearworkout" class="btn btn-primary">Crear</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="card mb-3" style="min-height: 190px;">
+            <div class="card-body">
+              <h5 class="card-title">Añade un entrenamiento</h5>
+              <p class="card-text">Añade algún entrenamiento que ya tengas creado</p>
+              <a href="workoutexistente" class="btn btn-primary">Añadir</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid mt-5">
+        <div class="row mt-5">
+            <div class="col-md-8 offset-md-2">
+                <h4 id="h4">Tu historial de entrenamientos:</h4><br><br>
+
+                <div class="list-group">
+                  {% for session in sessions %}
+                  <div class="card mb-3 shadow-lg">
+                      <div class="card-body">
+                          <h5 class="card-title">{{ session.nombre }}</h5>
+                          <p class="card-text">Musculos: {{ session.musculos }}</p>
+                          <p class="card-text">Fecha: {{ session.fecha }}</p>
+                          <a href="#" class="btn btn-primary" onclick="verEntrenamiento('{{ session._id }}')">Ver entrenamiento</a>
+                      </div>
+                  </div>
+                  {% endfor %}
+                </div>
+            </div>
+        </div>
+      </div>
+
+            <!-- Modal -->
+    <div class="modal fade" id="entrenamientoModal" tabindex="-1" role="dialog" aria-labelledby="entrenamientoModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content" style="background-color: #3b4246cc;">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="entrenamientoModalLabel">Detalles del Entrenamiento</h5>
+              </div>
+              <div class="modal-body" id="modal-body-content">
+                  <!-- Detalles del entrenamiento -->
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+        function verEntrenamiento(sesionId) {
+            fetch(`/api/workout/sesion/${sesionId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        return response.text().then(text => { throw new Error(text) });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Maneja los datos de la sesión de entrenamiento recibidos
+                    mostrarDetallesEntrenamiento(data);
+                    // Abre el modal
+                    $('#entrenamientoModal').modal('show');
+                })
+                .catch(error => console.error('Error al obtener detalles del entrenamiento:', error));
+        }
+
+        function mostrarDetallesEntrenamiento(data) {
+            const modalBody = document.getElementById('modal-body-content');
+            modalBody.innerHTML = `
+                <h5 style="color: white;">${data.nombre}</h5>
+                <p style="color: white;">Musculos: ${data.musculos}</p>
+                <ul>
+                    ${data.exercises.map(exercise => `
+                        <li>
+                            <strong style="color: rgb(255, 129, 57);">${exercise.name}</strong>
+                            <ul style="color: rgb(255, 129, 57);">
+                                ${exercise.sets.map(set => `<li style="color: white;">Set ${set.set}: ${set.kg} kg</li>`).join('')}
+                            </ul>
+                        </li>
+                    `).join('')}
+                </ul>
+            `;
+        }
+    </script>
+    {% endblock %}
